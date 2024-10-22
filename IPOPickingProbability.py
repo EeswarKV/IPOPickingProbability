@@ -60,61 +60,46 @@ def retrieve_subscription_rate():
         return None
 
 
-def calculate_probabilities(subscription_factor, max_applications):
+def generate_html_report(subscription_rate, start_date, end_date):
     """
-    Calculate the probability of no allotment and at least one allotment
-    for a given number of applications, based on the oversubscription factor.
+    Generate a static HTML file with subscription rate and IPO details.
     """
-    probabilities = []
-
-    # Handle cases where subscription_factor is less than 1
-    if subscription_factor < 1:
-        for num_applications in range(1, max_applications + 1):
-            prob_no_allotment = 0
-            prob_at_least_one_allotment = 100
-            probabilities.append((num_applications, prob_no_allotment, prob_at_least_one_allotment))
-    else:
-        probability_of_no_allotment_single = 1 - (1 / subscription_factor)
-
-        for num_applications in range(1, max_applications + 1):
-            prob_no_allotment = probability_of_no_allotment_single ** num_applications
-            prob_at_least_one_allotment = 1 - prob_no_allotment
-
-            probabilities.append((num_applications, round(prob_no_allotment * 100, 2), round(prob_at_least_one_allotment * 100, 2)))
-
-    return probabilities
-
-
-def print_probabilities(probabilities):
+    html_content = f"""
+    <html>
+    <head>
+        <title>IPO Subscription Report</title>
+    </head>
+    <body>
+        <h1>IPO Subscription Details</h1>
+        <p><strong>Start Date:</strong> {start_date}</p>
+        <p><strong>End Date:</strong> {end_date}</p>
+        <p><strong>Subscription Rate on Current Day:</strong> {subscription_rate}x</p>
+    </body>
+    </html>
     """
-    Print the calculated probabilities in a table format.
-    """
-    print(f"{'No. of Applications':<20} {'Probability of No Allotment (%)':<30} {'Probability of At Least 1 Allotment (%)':<30}")
-    print("-" * 80)
-    for num_applications, prob_no, prob_at_least_one in probabilities:
-        print(f"{num_applications:<20} {prob_no:<30} {prob_at_least_one:<30}")
+
+    with open("ipo_subscription_report.html", "w") as file:
+        file.write(html_content)
+
+    print("HTML report generated: ipo_subscription_report.html")
 
 
 def main():
-    try:
-        # Retrieve subscription rate automatically
-        subscription_factor = retrieve_subscription_rate()
+    # Retrieve subscription rate automatically
+    subscription_factor = retrieve_subscription_rate()
 
-        if subscription_factor is None:
-            print("Failed to retrieve the subscription rate.")
-            return
+    if subscription_factor is None:
+        print("Failed to retrieve the subscription rate.")
+        return
 
-        print(f"Retrieved subscription rate: {subscription_factor}x")
+    # Dates are hardcoded for demonstration, you can fetch dynamically if required
+    start_date = "October 21, 2024"
+    end_date = "October 23, 2024"
 
-        max_applications = int(20)
+    print(f"Retrieved subscription rate: {subscription_factor}x")
 
-        if max_applications <= 0:
-            print("The number of applications must be a positive integer.")
-        else:
-            probabilities = calculate_probabilities(subscription_factor, max_applications)
-            print_probabilities(probabilities)
-    except ValueError:
-        print("Please enter valid numeric values.")
+    # Generate the static HTML report
+    generate_html_report(subscription_factor, start_date, end_date)
 
 
 if __name__ == "__main__":
