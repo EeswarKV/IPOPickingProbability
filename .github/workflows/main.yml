@@ -41,5 +41,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ # Change this if your HTML report is generated in another directory
+          publish_dir: ./docs # Point to the docs directory where the HTML is generated
           publish_branch: gh-pages
