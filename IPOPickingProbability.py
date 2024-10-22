@@ -77,10 +77,11 @@ def generate_html_report(subscription_rate, start_date, end_date):
     </html>
     """
 
-    with open("ipo_subscription_report.html", "w") as file:
+    # Save the HTML report in the docs/ folder
+    with open("docs/ipo_subscription_report.html", "w") as file:
         file.write(html_content)
 
-    print("HTML report generated: ipo_subscription_report.html")
+    print("HTML report generated: docs/ipo_subscription_report.html")
 
 
 def main():
