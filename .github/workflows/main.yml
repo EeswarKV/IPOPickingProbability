@@ -15,31 +15,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step to check out the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step to set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      # Step to install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
-      # Step to run the Python script that generates the HTML file
       - name: Run Python Script
-        run: |
-          python IPOPickingProbability.py
+        run: python IPOPickingProbability.py
 
-      # Step to deploy to GitHub Pages
+      - name: Create .nojekyll file
+        run: echo "" > docs/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs # Point to the docs directory where the HTML is generated
+          publish_dir: ./docs
           publish_branch: gh-pages
