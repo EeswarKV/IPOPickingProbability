@@ -31,6 +31,7 @@ jobs:
       - name: Run Python Script
         run: python IPOPickingProbability.py
 
+      # Ensure the docs/ folder and create .nojekyll to bypass Jekyll processing
       - name: Create .nojekyll file
         run: echo "" > docs/.nojekyll
 
