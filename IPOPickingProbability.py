@@ -61,9 +61,6 @@ def retrieve_subscription_rate():
 
 
 def generate_html_report(subscription_rate, start_date, end_date):
-    """
-    Generate a static HTML file with subscription rate and IPO details.
-    """
     # Ensure the docs directory exists
     os.makedirs("docs", exist_ok=True)
 
