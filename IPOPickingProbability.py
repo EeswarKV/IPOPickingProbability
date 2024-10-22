@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-# New URL to check for subscription status
 url = "https://ipowatch.in/waaree-energies-ipo-subscription-status/"
 
 def retrieve_subscription_rate():
